@@ -17,7 +17,7 @@
 
 <body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
     <header class="text-center mb-8">
-        <h1 class="text-4xl font-bold text-gray-900">Welcome to Risk-o-Meter</h1>
+        <h1 class="text-4xl font-bold text-gray-900">Welcome to <br>Risk-o-Meter</h1>
         <p class="text-lg text-gray-600 mt-2">Assess your insurance and mortgage risks</p>
     </header>
     <main class="flex flex-col space-y-4 w-full max-w-sm">
@@ -30,6 +30,27 @@
             Mortgage Risk Assessment
         </button>
     </main>
+    <script src="../src/js/app.js"></script>
+    <script>
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get references to the assessment buttons
+            const insuranceButton = document.getElementById('insuranceRisk');
+            const mortgageButton = document.getElementById('mortgageRisk');
+
+            // Event listener for Insurance Risk Assessment button
+            insuranceButton.addEventListener('click', () => {
+                // Navigate to the Insurance Risk Assessment page
+                window.location.href = './insurance/insurance-assessment.html';
+            });
+
+            // Event listener for Mortgage Risk Assessment button
+            mortgageButton.addEventListener('click', () => {
+                // Navigate to the Mortgage Risk Assessment page
+                window.location.href = './mortgage/mortgage-assessment.html';
+            });
+        });
+    </script>
     <script>
         // Register the service worker
         if ('serviceWorker' in navigator) {
@@ -44,7 +65,6 @@
             });
         }
     </script>
-    <script src="../src/js/app.js"></script>
 </body>
 
 </html>
