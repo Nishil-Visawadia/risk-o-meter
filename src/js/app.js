@@ -9,13 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listener for Insurance Risk Assessment button
     insuranceButton.addEventListener('click', () => {
         // Navigate to the Insurance Risk Assessment page
-        window.location.href = './insurance/insurance-assessment.html';
+        window.location.href = '../../public/insurance/insurance-assessment.html';
     });
 
     // Event listener for Mortgage Risk Assessment button
     mortgageButton.addEventListener('click', () => {
         // Navigate to the Mortgage Risk Assessment page
-        window.location.href = './mortgage/mortgage-assessment.html';
+        window.location.href = '../../public/mortgage/mortgage-assessment.html';
     });
 });
 

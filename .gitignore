@@ -30,3 +30,4 @@ src/css/*.css.map
 # Miscellaneous
 *.bak
 *.tmp
+.vercel
