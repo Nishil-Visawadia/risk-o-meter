@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Assess your insurance and mortgage risks">
+    <meta name="keywords" content="insurance, mortgage, risk, assessment">
+    <title>Insurance Risk Assessment</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" sizes="192x192" href="../icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="../icons/icon-512x512.png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Insurance Risk Assessment</h1>
+            <p class="text-gray-600 mt-2">Provide your details to calculate your risk.</p>
+        </header>
+        <form id="insurance-form" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            <div>
+                <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+                <select id="gender" name="gender"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div>
+                <label for="marital-status" class="block text-sm font-medium text-gray-700">Marital Status</label>
+                <select id="marital-status" name="marital-status"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your marital status</option>
+                    <option value="Married (Dual Income Household)">Married (Dual Income Household)</option>
+                    <option value="Married (Single Earner Household)">Married (Single Earner Household)</option>
+                    <option value="Unmarried">Unmarried</option>
+                    <option value="Divorced/Separated/Widowed">Divorced/Separated/Widowed</option>
+                </select>
+            </div>
+            <div>
+                <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                <select id="location" name="location"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your location</option>
+                    <option value="Mahim">Mahim</option>
+                    <option value="Dadar">Dadar</option>
+                    <option value="Prabhadevi">Prabhadevi</option>
+                </select>
+            </div>
+            <button type="button" id="proceed-button"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Proceed
+            </button>
+        </form>
+    </main>
+    <script>
+        // Register the service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Handle the "Proceed" button click
+        document.getElementById('proceed-button').addEventListener('click', () => {
+            // Get user inputs
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const maritalStatus = document.getElementById('marital-status').value;
+            const location = document.getElementById('location').value;
+
+            // Validate inputs
+            if (!age || !gender || !maritalStatus || !location) {
+                alert('Please fill out all fields before proceeding.');
+                return;
+            }
+
+            // Save responses in variables (or localStorage if needed)
+            const userResponses = {
+                age,
+                gender,
+                maritalStatus,
+                location
+            };
+
+            // Optionally save to localStorage for later use
+            localStorage.setItem('insuranceResponses', JSON.stringify(userResponses));
+
+            // Navigate to the Income Stability page
+            window.location.href = './income-stability.html';
+        });
+    </script>
+</body>
+
+</html>

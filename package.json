@@ -1,0 +1,25 @@
+{
+  "name": "risk-o-meter",
+  "version": "1.0.0",
+  "description": "A Progressive Web App for assessing insurance and mortgage risks.",
+  "main": "src/js/app.js",
+  "scripts": {
+    "build": "tailwindcss build src/css/styles.css -o public/styles.css",
+    "start": "live-server public",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "PWA",
+    "risk assessment",
+    "insurance",
+    "mortgage"
+  ],
+  "author": "Nishil Visawadia",
+  "license": "MIT",
+  "dependencies": {
+    "tailwindcss": "^2.2.19"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}

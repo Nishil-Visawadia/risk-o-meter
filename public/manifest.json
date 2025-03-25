@@ -1,0 +1,22 @@
+{
+  "name": "Risk-o-Meter",
+  "short_name": "Risk-o-Meter",
+  "description": "A progressive web app for assessing insurance and mortgage risks.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0f4f8",
+  "theme_color": "#a0d3e8",
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait"
+}
