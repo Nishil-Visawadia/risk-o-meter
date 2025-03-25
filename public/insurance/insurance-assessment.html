@@ -18,7 +18,7 @@
     <main class="w-full max-w-md p-4">
         <header class="text-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Insurance Risk Assessment</h1>
-            <p class="text-gray-600 mt-2">Provide your details to calculate your risk.</p>
+            <p class="text-gray-600 mt-2">Provide your demographic details to calculate your risk.</p>
         </header>
         <form id="insurance-form" class="bg-white p-6 rounded-lg shadow-md space-y-4">
             <div>
@@ -76,6 +76,33 @@
             });
         }
 
+        // Weightage and Risk Mapping
+        const insuranceWeightageMapping = {
+            age: {
+                "18-25": { weightage: 10, risk: 6 },
+                "26-35": { weightage: 10, risk: 5 },
+                "36-45": { weightage: 10, risk: 7 },
+                "46-55": { weightage: 10, risk: 8 },
+                "56-65": { weightage: 10, risk: 9 },
+                "65+": { weightage: 10, risk: 10 },
+            },
+            gender: {
+                Male: { weightage: 5, risk: 5 },
+                Female: { weightage: 5, risk: 3 },
+            },
+            maritalStatus: {
+                "Married (Dual Income Household)": { weightage: 5, risk: 2 },
+                "Married (Single Earner Household)": { weightage: 5, risk: 3 },
+                Unmarried: { weightage: 5, risk: 4 },
+                "Divorced/Separated/Widowed": { weightage: 5, risk: 5 },
+            },
+            location: {
+                Mahim: { weightage: 10, risk: 10 },
+                Dadar: { weightage: 10, risk: 6 },
+                Prabhadevi: { weightage: 10, risk: 3 },
+            },
+        };
+
         // Handle the "Proceed" button click
         document.getElementById('proceed-button').addEventListener('click', () => {
             // Get user inputs
@@ -90,16 +117,36 @@
                 return;
             }
 
-            // Save responses in variables (or localStorage if needed)
+            // Calculate Risk Scores
+            let totalRisk = 0;
+
+            // Age Risk
+            if (age >= 18 && age <= 25) totalRisk += insuranceWeightageMapping.age["18-25"].risk;
+            else if (age >= 26 && age <= 35) totalRisk += insuranceWeightageMapping.age["26-35"].risk;
+            else if (age >= 36 && age <= 45) totalRisk += insuranceWeightageMapping.age["36-45"].risk;
+            else if (age >= 46 && age <= 55) totalRisk += insuranceWeightageMapping.age["46-55"].risk;
+            else if (age >= 56 && age <= 65) totalRisk += insuranceWeightageMapping.age["56-65"].risk;
+            else if (age > 65) totalRisk += insuranceWeightageMapping.age["65+"].risk;
+
+            // Gender Risk
+            totalRisk += insuranceWeightageMapping.gender[gender]?.risk || 0;
+
+            // Marital Status Risk
+            totalRisk += insuranceWeightageMapping.maritalStatus[maritalStatus]?.risk || 0;
+
+            // Location Risk
+            totalRisk += insuranceWeightageMapping.location[location]?.risk || 0;
+
+            // Save Responses and Risk Score
             const userResponses = {
                 age,
                 gender,
                 maritalStatus,
-                location
+                location,
+                totalRisk,
             };
 
-            // Optionally save to localStorage for later use
-            localStorage.setItem('insuranceResponses', JSON.stringify(userResponses));
+            localStorage.setItem('insuranceAssessmentResponses', JSON.stringify(userResponses));
 
             // Navigate to the Income Stability page
             window.location.href = './income-stability.html';

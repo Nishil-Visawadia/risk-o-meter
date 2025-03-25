@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Assess your income stability for risk evaluation">
+    <meta name="keywords" content="income stability, risk assessment">
+    <title>Income Stability</title>
+    <link rel="manifest" href="../manifest.json">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Insurance Risk Assessment</h1>
+            <p class="text-gray-600 mt-2">Provide your income details to calculate your risk.</p>
+        </header>
+        <form id="income-form" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            <!-- Occupation Field -->
+            <div>
+                <label for="occupation" class="block text-sm font-medium text-gray-700">Occupation</label>
+                <select id="occupation" name="occupation"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your occupation</option>
+                    <option value="Government">Government</option>
+                    <option value="Private">Private</option>
+                    <option value="Self-Employed">Self-Employed</option>
+                </select>
+            </div>
+            <div id="occupation-details" class="hidden">
+                <label for="occupation-subtype" class="block text-sm font-medium text-gray-700">Select Subtype</label>
+                <select id="occupation-subtype" name="occupation-subtype"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </select>
+            </div>
+
+            <!-- Annual Income Field -->
+            <div>
+                <label for="annual-income" class="block text-sm font-medium text-gray-700">Annual Income</label>
+                <select id="annual-income" name="annual-income"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your annual income</option>
+                    <option value="Less than 3 LPA">Less than 3 LPA</option>
+                    <option value="3 to 6 LPA">3 to 6 LPA</option>
+                    <option value="6 to 9 LPA">6 to 9 LPA</option>
+                    <option value="9 to 12 LPA">9 to 12 LPA</option>
+                    <option value="12 to 15 LPA">12 to 15 LPA</option>
+                    <option value="15+ LPA">15+ LPA</option>
+                </select>
+            </div>
+
+            <!-- PAN Field -->
+            <div>
+                <label for="pan" class="block text-sm font-medium text-gray-700">Do you have a PAN?</label>
+                <select id="pan" name="pan"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No (Fill form 60)">No (Fill form 60)</option>
+                </select>
+            </div>
+
+            <!-- CIBIL Score Field -->
+            <div>
+                <label for="cibil-score" class="block text-sm font-medium text-gray-700">CIBIL Score</label>
+                <select id="cibil-score" name="cibil-score"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your CIBIL score</option>
+                    <option value="750 - 900">750 - 900</option>
+                    <option value="650 – 749">650 – 749</option>
+                    <option value="Below 650">Below 650</option>
+                    <option value="Not Available">Not Available</option>
+                </select>
+            </div>
+
+            <!-- Education Field -->
+            <div>
+                <label for="education" class="block text-sm font-medium text-gray-700">Education</label>
+                <select id="education" name="education"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your education level</option>
+                    <option value="College Graduate & Above">College Graduate & Above</option>
+                    <option value="12th Pass">12th Pass</option>
+                    <option value="10th Pass">10th Pass</option>
+                    <option value="Below 10th">Below 10th</option>
+                </select>
+            </div>
+
+            <!-- Proceed Button -->
+            <button type="button" id="proceed-button"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Proceed
+            </button>
+        </form>
+    </main>
+    <script>
+        // Weightage and Risk Mapping
+        const weightageMapping = {
+            occupation: {
+                Government: { weightage: 10, risk: 3 },
+                Private: { weightage: 10, risk: 6 },
+                "Self-Employed": { weightage: 10, risk: 10 },
+            },
+            occupationSubtype: {
+                Government: {
+                    Firefighters: { weightage: 3, risk: 3 },
+                    "Customs & Revenue Officers": { weightage: 3, risk: 2 },
+                    "Administrative Services": { weightage: 3, risk: 1 },
+                },
+                Private: {
+                    "Reliance Industries Ltd": { weightage: 6, risk: 2 },
+                    "M.R.F. Ltd.": { weightage: 6, risk: 3 },
+                    "Central Depository Services (India) Ltd.": { weightage: 6, risk: 5 },
+                    Others: { weightage: 6, risk: 6 },
+                },
+            },
+            annualIncome: {
+                "Less than 3 LPA": { weightage: 20, risk: 10 },
+                "3 to 6 LPA": { weightage: 20, risk: 8.5 },
+                "6 to 9 LPA": { weightage: 20, risk: 6.5 },
+                "9 to 12 LPA": { weightage: 20, risk: 4 },
+                "12 to 15 LPA": { weightage: 20, risk: 3 },
+                "15+ LPA": { weightage: 20, risk: 1.5 },
+            },
+            pan: {
+                Yes: { weightage: 7, risk: 0 },
+                "No (Fill form 60)": { weightage: 7, risk: 7 },
+            },
+            cibilScore: {
+                "750 - 900": { weightage: 5, risk: 2 },
+                "650 – 749": { weightage: 5, risk: 3 },
+                "Below 650": { weightage: 5, risk: 4 },
+                "Not Available": { weightage: 5, risk: 5 },
+            },
+            education: {
+                "College Graduate & Above": { weightage: 8, risk: 2 },
+                "12th Pass": { weightage: 8, risk: 4 },
+                "10th Pass": { weightage: 8, risk: 6 },
+                "Below 10th": { weightage: 8, risk: 8 },
+            },
+        };
+
+        // Handle Occupation Subtype Dropdown
+        const occupationField = document.getElementById('occupation');
+        const occupationDetails = document.getElementById('occupation-details');
+        const occupationSubtype = document.getElementById('occupation-subtype');
+
+        occupationField.addEventListener('change', () => {
+            const occupation = occupationField.value;
+            occupationDetails.classList.add('hidden');
+            occupationSubtype.innerHTML = '';
+
+            if (occupation === 'Government') {
+                occupationDetails.classList.remove('hidden');
+                occupationSubtype.innerHTML = `
+                    <option value="Firefighters">Firefighters</option>
+                    <option value="Customs & Revenue Officers">Customs & Revenue Officers</option>
+                    <option value="Administrative Services">Administrative Services</option>
+                `;
+            } else if (occupation === 'Private') {
+                occupationDetails.classList.remove('hidden');
+                occupationSubtype.innerHTML = `
+                    <option value="Reliance Industries Ltd">Reliance Industries Ltd</option>
+                    <option value="M.R.F. Ltd.">M.R.F. Ltd.</option>
+                    <option value="Central Depository Services (India) Ltd.">Central Depository Services (India) Ltd.</option>
+                    <option value="Others">Others</option>
+                `;
+            }
+        });
+
+        // Handle Proceed Button Click
+        document.getElementById('proceed-button').addEventListener('click', () => {
+            const occupation = occupationField.value;
+            const occupationSubtypeValue = occupationSubtype.value || null;
+            const annualIncome = document.getElementById('annual-income').value;
+            const pan = document.getElementById('pan').value;
+            const cibilScore = document.getElementById('cibil-score').value;
+            const education = document.getElementById('education').value;
+
+            if (!occupation || !annualIncome || !pan || !cibilScore || !education) {
+                alert('Please fill out all fields before proceeding.');
+                return;
+            }
+
+            // Calculate Risk Scores
+            let totalRisk = 0;
+
+            // Occupation Risk
+            const occupationRisk = weightageMapping.occupation[occupation]?.risk || 0;
+            totalRisk += occupationRisk;
+
+            // Occupation Subtype Risk
+            if (occupationSubtypeValue && weightageMapping.occupationSubtype[occupation]) {
+                const subtypeRisk = weightageMapping.occupationSubtype[occupation][occupationSubtypeValue]?.risk || 0;
+                totalRisk += subtypeRisk;
+            }
+
+            // Annual Income Risk
+            const annualIncomeRisk = weightageMapping.annualIncome[annualIncome]?.risk || 0;
+            totalRisk += annualIncomeRisk;
+
+            // PAN Risk
+            const panRisk = weightageMapping.pan[pan]?.risk || 0;
+            totalRisk += panRisk;
+
+            // CIBIL Score Risk
+            const cibilScoreRisk = weightageMapping.cibilScore[cibilScore]?.risk || 0;
+            totalRisk += cibilScoreRisk;
+
+            // Education Risk
+            const educationRisk = weightageMapping.education[education]?.risk || 0;
+            totalRisk += educationRisk;
+
+            // Save Responses and Risk Score
+            const userResponses = {
+                occupation,
+                occupationSubtype: occupationSubtypeValue,
+                annualIncome,
+                pan,
+                cibilScore,
+                education,
+                totalRisk,
+            };
+
+            localStorage.setItem('incomeStabilityResponses', JSON.stringify(userResponses));
+
+            // Navigate to the Medical and Health page
+            window.location.href = './medical-health.html';
+        });
+    </script>
+</body>
+
+</html>
