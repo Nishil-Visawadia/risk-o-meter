@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Provide your medical details to calculate your risk">
+    <meta name="keywords" content="medical health, risk assessment">
+    <title>Medical Health</title>
+    <link rel="manifest" href="../manifest.json">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Insurance Risk Assessment</h1>
+            <p class="text-gray-600 mt-2">Provide your medical details to calculate your risk.</p>
+        </header>
+        <form id="medical-form" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            <!-- Pre Existing Health Issues -->
+            <div>
+                <label for="health-issues" class="block text-sm font-medium text-gray-700">Pre Existing Health
+                    Issues</label>
+                <select id="health-issues" name="health-issues"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select a health issue</option>
+                    <option value="Blindness">Blindness</option>
+                    <option value="Parkinson's disease">Parkinson's disease</option>
+                    <option value="Cancer">Cancer</option>
+                </select>
+            </div>
+
+            <!-- Family Health History -->
+            <div>
+                <label for="family-history" class="block text-sm font-medium text-gray-700">Family Health
+                    History</label>
+                <select id="family-history" name="family-history"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select a family health history</option>
+                    <option value="Hepatitis B and C">Hepatitis B and C</option>
+                    <option value="Hypertension">Hypertension</option>
+                    <option value="Heart Attack">Heart Attack</option>
+                </select>
+            </div>
+
+            <!-- Habits -->
+            <fieldset class="space-y-4">
+                <legend class="block text-sm font-medium text-gray-700">Habits</legend>
+
+                <!-- Physical Activities -->
+                <div>
+                    <label for="physical-activities" class="block text-sm font-medium text-gray-700">Physical
+                        Activities</label>
+                    <select id="physical-activities" name="physical-activities"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select your activity level</option>
+                        <option value="Never">Never</option>
+                        <option value="Occasionally">Occasionally</option>
+                        <option value="Regularly">Regularly</option>
+                    </select>
+                </div>
+
+                <!-- Meditation -->
+                <div>
+                    <label for="meditation" class="block text-sm font-medium text-gray-700">Meditation</label>
+                    <select id="meditation" name="meditation"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select your meditation frequency</option>
+                        <option value="Never">Never</option>
+                        <option value="Occasionally">Occasionally</option>
+                        <option value="Regularly">Regularly</option>
+                    </select>
+                </div>
+
+                <!-- Smoking -->
+                <div>
+                    <label for="smoking" class="block text-sm font-medium text-gray-700">Smoking</label>
+                    <select id="smoking" name="smoking"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select your smoking habit</option>
+                        <option value="Never">Never</option>
+                        <option value="Occasionally">Occasionally</option>
+                        <option value="Regularly">Regularly</option>
+                    </select>
+                </div>
+
+                <!-- Alcohol Consumption -->
+                <div>
+                    <label for="alcohol" class="block text-sm font-medium text-gray-700">Alcohol Consumption</label>
+                    <select id="alcohol" name="alcohol"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select your alcohol consumption</option>
+                        <option value="Never">Never</option>
+                        <option value="Occasionally">Occasionally</option>
+                        <option value="Regularly">Regularly</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <!-- Get Insurance Risk Assessment Score Button -->
+            <button type="button" id="get-risk-score"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Get Insurance Risk Assessment Score
+            </button>
+        </form>
+    </main>
+    <script>
+        const healthRiskMapping = {
+            healthIssues: {
+                "Blindness": 4,
+                "Parkinson's disease": 6,
+                "Cancer": 8,
+            },
+            familyHistory: {
+                "Hepatitis B and C": 3,
+                "Hypertension": 5,
+                "Heart Attack": 7,
+            },
+            habits: {
+                physicalActivities: { "Never": 5, "Occasionally": 3, "Regularly": 2 },
+                meditation: { "Never": 5, "Occasionally": 3, "Regularly": 1 },
+                smoking: { "Never": 0, "Occasionally": 4, "Regularly": 5 },
+                alcohol: { "Never": 0, "Occasionally": 3, "Regularly": 5 },
+            },
+        };
+
+        document.getElementById('get-risk-score').addEventListener('click', () => {
+            const healthIssues = document.getElementById('health-issues').value;
+            const familyHistory = document.getElementById('family-history').value;
+            const physicalActivities = document.getElementById('physical-activities').value;
+            const meditation = document.getElementById('meditation').value;
+            const smoking = document.getElementById('smoking').value;
+            const alcohol = document.getElementById('alcohol').value;
+
+            if (!healthIssues || !familyHistory || !physicalActivities || !meditation || !smoking || !alcohol) {
+                alert('Please fill out all fields before proceeding.');
+                return;
+            }
+
+            const healthRisk = healthRiskMapping.healthIssues[healthIssues] || 0;
+            const familyRisk = healthRiskMapping.familyHistory[familyHistory] || 0;
+
+            const habitsRisk = (
+                healthRiskMapping.habits.physicalActivities[physicalActivities] +
+                healthRiskMapping.habits.meditation[meditation] +
+                healthRiskMapping.habits.smoking[smoking] +
+                healthRiskMapping.habits.alcohol[alcohol]
+            ) / 4;
+
+            const totalRisk = healthRisk + familyRisk + habitsRisk;
+
+            localStorage.setItem('medicalHealthRisk', JSON.stringify({ healthRisk, familyRisk, habitsRisk, totalRisk }));
+
+            window.location.href = './risk-score.html';
+        });
+    </script>
+</body>
+
+</html>
