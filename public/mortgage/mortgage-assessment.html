@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Assess your insurance and mortgage risks">
+    <meta name="keywords" content="insurance, mortgage, risk, assessment">
+    <title>Mortgage Risk Assessment</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" sizes="192x192" href="../icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="../icons/icon-512x512.png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Mortgage Risk Assessment</h1>
+            <p class="text-gray-600 mt-2">Provide your demographic details to calculate your risk.</p>
+        </header>
+        <form id="insurance-form" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            <div>
+                <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+                <select id="gender" name="gender"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Joint Applicant (Male + Female)">Joint Applicant (Male + Female)</option>
+                </select>
+            </div>
+            <div>
+                <label for="marital-status" class="block text-sm font-medium text-gray-700">Marital Status</label>
+                <select id="marital-status" name="marital-status"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your marital status</option>
+                    <option value="Married (Dual Income Household)">Married (Dual Income Household)</option>
+                    <option value="Married (Single Earner Household)">Married (Single Earner Household)</option>
+                    <option value="Unmarried (Single Applicant)">Unmarried (Single Applicant)</option>
+                    <option value="Divorced/Separated/Widowed">Divorced/Separated/Widowed</option>
+                </select>
+            </div>
+            <button type="button" id="proceed-button"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Proceed
+            </button>
+        </form>
+    </main>
+    <script>
+        // Register the service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Weightage and Risk Mapping
+        const mortgageWeightageMapping = {
+            age: {
+                "18-25": { weightage: 10, risk: 8 },
+                "26-35": { weightage: 10, risk: 4 },
+                "36-45": { weightage: 10, risk: 6 },
+                "46-55": { weightage: 10, risk: 8 },
+                "56+": { weightage: 10, risk: 10 },
+            },
+            gender: {
+                "Male": { weightage: 5, risk: 5 },
+                "Female": { weightage: 5, risk: 3 },
+                "Joint Applicant (Male + Female)": { weightage: 5, risk: 2 },
+            },
+            maritalStatus: {
+                "Married (Dual Income Household)": { weightage: 7, risk: 3 },
+                "Married (Single Earner Household)": { weightage: 7, risk: 5 },
+                "Unmarried (Single Applicant)": { weightage: 7, risk: 6 },
+                "Divorced/Separated/Widowed": { weightage: 7, risk: 7 },
+            },
+        };
+
+        // Handle the "Proceed" button click
+        document.getElementById('proceed-button').addEventListener('click', () => {
+            // Get user inputs
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const maritalStatus = document.getElementById('marital-status').value;
+
+            // Validate inputs
+            if (!age || !gender || !maritalStatus) {
+                alert('Please fill out all fields before proceeding.');
+                return;
+            }
+
+            // Calculate Risk Scores
+            let totalRisk = 0;
+
+            // Age Risk
+            if (age >= 18 && age <= 25) totalRisk += mortgageWeightageMapping.age["18-25"].risk;
+            else if (age >= 26 && age <= 35) totalRisk += mortgageWeightageMapping.age["26-35"].risk;
+            else if (age >= 36 && age <= 45) totalRisk += mortgageWeightageMapping.age["36-45"].risk;
+            else if (age >= 46 && age <= 55) totalRisk += mortgageWeightageMapping.age["46-55"].risk;
+            else if (age >= 56) totalRisk += mortgageWeightageMapping.age["56+"].risk;
+
+            // Gender Risk
+            totalRisk += mortgageWeightageMapping.gender[gender]?.risk || 0;
+
+            // Marital Status Risk
+            totalRisk += mortgageWeightageMapping.maritalStatus[maritalStatus]?.risk || 0;
+
+            // Save Responses and Risk Score
+            const userResponses = {
+                age,
+                gender,
+                maritalStatus,
+                totalRisk,
+            };
+
+            localStorage.setItem('mortgageAssessmentResponses', JSON.stringify(userResponses));
+
+            // Navigate to the Income Stability page
+            window.location.href = './mortgage-income-stability.html';
+        });
+    </script>
+</body>
+
+</html>

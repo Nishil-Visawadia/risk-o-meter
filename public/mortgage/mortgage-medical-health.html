@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Provide your medical details to calculate your risk">
+    <meta name="keywords" content="medical health, risk assessment">
+    <title>Medical Health</title>
+    <link rel="manifest" href="../manifest.json">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Mortgage Risk Assessment</h1>
+            <p class="text-gray-600 mt-2">Provide your location details to calculate your risk.</p>
+        </header>
+        <form id="medical-form" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            
+            <!-- Location -->
+            <div>
+                <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                <select id="location" name="location"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your location</option>
+                    <option value="Mahim">Mahim</option>
+                    <option value="Dadar">Dadar</option>
+                    <option value="Prabhadevi">Prabhadevi</option>
+                </select>
+            </div>
+
+            <!-- Age of Building -->
+            <div>
+                <label for="age-building" class="block text-sm font-medium text-gray-700">Age of Building</label>
+                <select id="age-building" name="age-building"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select the age of building</option>
+                    <option value="0 - 10 years (New Construction)">0 - 10 years (New Construction)</option>
+                    <option value="10 - 20 years (Relatively New)">10 - 20 years (Relatively New)</option>
+                    <option value="20 - 30 years (Aging Structures)">20 - 30 years (Aging Structures)</option>
+                    <option value="30 - 40 years (Old Construction)">30 - 40 years (Old Construction)</option>
+                    <option value="40+ years (Pre-Redevelopment Phase / Dilapidated)">40+ years (Pre-Redevelopment Phase / Dilapidated)</option>
+                </select>
+            </div>
+
+            <!-- Get Insurance Risk Assessment Score Button -->
+            <button type="button" id="get-risk-score"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Get Mortgage Risk Assessment Score
+            </button>
+        </form>
+    </main>
+    <script>
+
+        // Register the service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        const healthRiskMapping = {
+            location: {
+                "Mahim": { weightage: 10, risk: 10 },
+                "Dadar": { weightage: 10, risk: 6 },
+                "Prabhadevi": { weightage: 10, risk: 3 },
+            },
+            ageBuilding: {
+                "0 - 10 years (New Construction)": { weightage: 15, risk: 2 },
+                "10 - 20 years (Relatively New)": { weightage: 15, risk: 6 },
+                "20 - 30 years (Aging Structures)": { weightage: 15, risk: 10 },
+                "30 - 40 years (Old Construction)": { weightage: 15, risk: 13 },
+                "40+ years (Pre-Redevelopment Phase / Dilapidated)": { weightage: 15, risk: 15 },
+            },
+        };
+
+        document.getElementById('get-risk-score').addEventListener('click', () => {
+            const location = document.getElementById('location').value;
+            const ageBuilding = document.getElementById('age-building').value;
+
+            if (!location || !ageBuilding) {
+                alert('Please fill out all fields before proceeding.');
+                return;
+            }
+
+            const locationRisk = healthRiskMapping.location[location] || 0;
+            const ageBuildingRisk = healthRiskMapping.ageBuilding[ageBuilding] || 0;
+
+            const totalRisk = locationRisk.risk + ageBuildingRisk.risk;
+
+            localStorage.setItem('mortgageMedicalHealthRisk', JSON.stringify({ locationRisk, ageBuildingRisk , totalRisk }));
+
+            window.location.href = './mortgage-risk-score.html';
+        });
+    </script>
+</body>
+
+</html>
