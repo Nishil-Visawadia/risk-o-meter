@@ -114,13 +114,13 @@
         // Weightage and Risk Mapping
         const weightageMapping = {
             occupation: {
-                Government: { weightage: 10, risk: 3 },
-                Private: { weightage: 10, risk: 6 },
+                "Government": { weightage: 10, risk: 3 },
+                "Private": { weightage: 10, risk: 6 },
                 "Self-Employed": { weightage: 10, risk: 10 },
             },
             occupationSubtype: {
                 Government: {
-                    Firefighters: { weightage: 3, risk: 3 },
+                    "Firefighters": { weightage: 3, risk: 3 },
                     "Customs & Revenue Officers": { weightage: 3, risk: 2 },
                     "Administrative Services": { weightage: 3, risk: 1 },
                 },
@@ -128,24 +128,24 @@
                     "Reliance Industries Ltd": { weightage: 6, risk: 2 },
                     "M.R.F. Ltd.": { weightage: 6, risk: 3 },
                     "Central Depository Services (India) Ltd.": { weightage: 6, risk: 5 },
-                    Others: { weightage: 6, risk: 6 },
+                    "Others": { weightage: 6, risk: 6 },
                 },
             },
             annualIncome: {
-                "Less than 3 LPA": { weightage: 20, risk: 10 },
-                "3 to 6 LPA": { weightage: 20, risk: 8.5 },
-                "6 to 9 LPA": { weightage: 20, risk: 6.5 },
-                "9 to 12 LPA": { weightage: 20, risk: 4 },
-                "12 to 15 LPA": { weightage: 20, risk: 3 },
-                "15+ LPA": { weightage: 20, risk: 1.5 },
+                "Less than 3 LPA": { weightage: 20, risk: 20 },
+                "3 to 6 LPA": { weightage: 20, risk: 17 },
+                "6 to 9 LPA": { weightage: 20, risk: 13 },
+                "9 to 12 LPA": { weightage: 20, risk: 8 },
+                "12 to 15 LPA": { weightage: 20, risk: 6 },
+                "15+ LPA": { weightage: 20, risk: 3 },
             },
             pan: {
-                Yes: { weightage: 7, risk: 0 },
+                "Yes": { weightage: 7, risk: 0 },
                 "No (Fill form 60)": { weightage: 7, risk: 7 },
             },
             cibilScore: {
                 "750 - 900": { weightage: 5, risk: 2 },
-                "650 – 749": { weightage: 5, risk: 3 },
+                "650 - 749": { weightage: 5, risk: 3 },
                 "Below 650": { weightage: 5, risk: 4 },
                 "Not Available": { weightage: 5, risk: 5 },
             },
@@ -203,30 +203,36 @@
             let totalRisk = 0;
 
             // Occupation Risk
-            const occupationRisk = weightageMapping.occupation[occupation]?.risk || 0;
-            totalRisk += occupationRisk;
+            // const occupationRisk = weightageMapping.occupation[occupation]?.risk || 0;
+            // totalRisk += occupationRisk;
+            // console.log(occupationRisk);
 
             // Occupation Subtype Risk
             if (occupationSubtypeValue && weightageMapping.occupationSubtype[occupation]) {
                 const subtypeRisk = weightageMapping.occupationSubtype[occupation][occupationSubtypeValue]?.risk || 0;
                 totalRisk += subtypeRisk;
+                console.log(subtypeRisk);
             }
 
             // Annual Income Risk
             const annualIncomeRisk = weightageMapping.annualIncome[annualIncome]?.risk || 0;
             totalRisk += annualIncomeRisk;
+            console.log(annualIncomeRisk);
 
             // PAN Risk
             const panRisk = weightageMapping.pan[pan]?.risk || 0;
             totalRisk += panRisk;
+            console.log(panRisk);
 
             // CIBIL Score Risk
             const cibilScoreRisk = weightageMapping.cibilScore[cibilScore]?.risk || 0;
             totalRisk += cibilScoreRisk;
+            console.log(cibilScoreRisk);
 
             // Education Risk
             const educationRisk = weightageMapping.education[education]?.risk || 0;
             totalRisk += educationRisk;
+            console.log(educationRisk);
 
             // Save Responses and Risk Score
             const userResponses = {
@@ -239,10 +245,12 @@
                 totalRisk,
             };
 
+            console.log(userResponses);
+
             localStorage.setItem('incomeStabilityResponses', JSON.stringify(userResponses));
 
             // Navigate to the Medical and Health page
-            window.location.href = './medical-health.html';
+            // window.location.href = './medical-health.html';
         });
     </script>
 </body>
