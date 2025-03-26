@@ -26,6 +26,7 @@
                 <select id="health-issues" name="health-issues"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="" disabled selected>Select a health issue</option>
+                    <option value="No Issues">No Issues</option>
                     <option value="Blindness">Blindness</option>
                     <option value="Parkinson's disease">Parkinson's disease</option>
                     <option value="Cancer">Cancer</option>
@@ -39,6 +40,7 @@
                 <select id="family-history" name="family-history"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="" disabled selected>Select a family health history</option>
+                    <option value="No History">No History</option>
                     <option value="Hepatitis B and C">Hepatitis B and C</option>
                     <option value="Hypertension">Hypertension</option>
                     <option value="Heart Attack">Heart Attack</option>
@@ -123,11 +125,13 @@
 
         const healthRiskMapping = {
             healthIssues: {
+                "No Issues": 0,
                 "Blindness": 4,
                 "Parkinson's disease": 6,
                 "Cancer": 8,
             },
             familyHistory: {
+                "No History": 0,
                 "Hepatitis B and C": 3,
                 "Hypertension": 5,
                 "Heart Attack": 7,

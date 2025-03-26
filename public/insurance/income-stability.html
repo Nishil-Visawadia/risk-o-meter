@@ -28,6 +28,7 @@
                     <option value="Government">Government</option>
                     <option value="Private">Private</option>
                     <option value="Self-Employed">Self-Employed</option>
+                    <option value="Unemployed">Unemployed</option>
                 </select>
             </div>
             <div id="occupation-details" class="hidden">
@@ -43,6 +44,7 @@
                 <select id="annual-income" name="annual-income"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="" disabled selected>Select your annual income</option>
+                    <option value="No Income">No Income</option>
                     <option value="Less than 3 LPA">Less than 3 LPA</option>
                     <option value="3 to 6 LPA">3 to 6 LPA</option>
                     <option value="6 to 9 LPA">6 to 9 LPA</option>
@@ -116,7 +118,8 @@
             occupation: {
                 "Government": { weightage: 10, risk: 3 },
                 "Private": { weightage: 10, risk: 6 },
-                "Self-Employed": { weightage: 10, risk: 10 },
+                "Self-Employed": { weightage: 10, risk: 8 },
+                "Unemployed": { weightage: 10, risk: 10 },
             },
             occupationSubtype: {
                 Government: {
@@ -132,9 +135,10 @@
                 },
             },
             annualIncome: {
-                "Less than 3 LPA": { weightage: 20, risk: 20 },
-                "3 to 6 LPA": { weightage: 20, risk: 17 },
-                "6 to 9 LPA": { weightage: 20, risk: 13 },
+                "No Income": { weightage: 20, risk: 20 },
+                "Less than 3 LPA": { weightage: 20, risk: 18 },
+                "3 to 6 LPA": { weightage: 20, risk: 16 },
+                "6 to 9 LPA": { weightage: 20, risk: 14 },
                 "9 to 12 LPA": { weightage: 20, risk: 8 },
                 "12 to 15 LPA": { weightage: 20, risk: 6 },
                 "15+ LPA": { weightage: 20, risk: 3 },
@@ -202,16 +206,17 @@
             // Calculate Risk Scores
             let totalRisk = 0;
 
-            // Occupation Risk
-            // const occupationRisk = weightageMapping.occupation[occupation]?.risk || 0;
-            // totalRisk += occupationRisk;
-            // console.log(occupationRisk);
-
-            // Occupation Subtype Risk
-            if (occupationSubtypeValue && weightageMapping.occupationSubtype[occupation]) {
-                const subtypeRisk = weightageMapping.occupationSubtype[occupation][occupationSubtypeValue]?.risk || 0;
-                totalRisk += subtypeRisk;
-                console.log(subtypeRisk);
+            // Occupation Risk and Subtype Risk
+            if (occupation === 'Government' || occupation === 'Private') {
+                if (occupationSubtypeValue && weightageMapping.occupationSubtype[occupation]) {
+                    const subtypeRisk = weightageMapping.occupationSubtype[occupation][occupationSubtypeValue]?.risk || 0;
+                    totalRisk += subtypeRisk;
+                    console.log(subtypeRisk);
+                }
+            } else if (occupation === 'Self-Employed' || occupation === 'Unemployed') {
+                const occupationRisk = weightageMapping.occupation[occupation]?.risk || 0;
+                totalRisk += occupationRisk;
+                console.log(occupationRisk);
             }
 
             // Annual Income Risk
