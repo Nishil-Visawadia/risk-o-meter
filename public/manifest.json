@@ -2,7 +2,7 @@
   "name": "Risk-o-Meter",
   "short_name": "Risk-o-Meter",
   "description": "A progressive web app for assessing insurance and mortgage risks.",
-  "start_url": "/",
+  "start_url": "./splash.html",
   "display": "standalone",
   "background_color": "#f0f4f8",
   "theme_color": "#a0d3e8",
