@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#f3f4f6"> <!-- Light pastel background -->
 </head>
 
-<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen m-4">
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen p-4">
     <header class="text-center mb-8">
         <h1 class="text-4xl font-bold text-gray-900">Welcome to <br>Risk-o-Meter</h1>
         <p class="text-lg text-gray-600 mt-2">Assess your insurance and mortgage risks</p>
@@ -29,6 +29,10 @@
             class="bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
             Mortgage Risk Assessment
         </button>
+        <button id="healthFraudRisk"
+            class="bg-red-500 text-white py-3 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+            Health Fraud Assessment
+        </button>
     </main>
     <script src="../src/js/app.js"></script>
     <script>
@@ -37,6 +41,7 @@
             // Get references to the assessment buttons
             const insuranceButton = document.getElementById('insuranceRisk');
             const mortgageButton = document.getElementById('mortgageRisk');
+            const healthFraudButton = document.getElementById('healthFraudRisk');
 
             // Event listener for Insurance Risk Assessment button
             insuranceButton.addEventListener('click', () => {
@@ -48,6 +53,12 @@
             mortgageButton.addEventListener('click', () => {
                 // Navigate to the Mortgage Risk Assessment page
                 window.location.href = './mortgage/mortgage-assessment.html';
+            });
+
+            // Event listener for Health Fraud Assessment button
+            healthFraudButton.addEventListener('click', () => {
+                // Navigate to the Health Fraud Assessment page
+                window.location.href = './health/health-fraud-assessment.html';
             });
         });
     </script>

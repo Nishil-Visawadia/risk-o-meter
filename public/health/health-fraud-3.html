@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Assess your health fraud risk">
+    <meta name="keywords" content="health fraud, risk assessment">
+    <title>Health Fraud Assessment - Step 3</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" sizes="192x192" href="../icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="../icons/icon-512x512.png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Health Fraud Assessment - Step 3</h1>
+            <p class="text-gray-600 mt-2">Provide additional details to assess your health fraud risk.</p>
+        </header>
+        <form id="health-fraud-step3-form" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            <!-- Active Health Insurance Policies -->
+            <div>
+                <label for="active-policies" class="block text-sm font-medium text-gray-700">How many other active
+                    health insurance policies does the applicant hold across different insurance companies?</label>
+                <input type="number" id="active-policies" name="active-policies"
+                    placeholder="Enter number of active policies"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Discrepancies in Medical Records -->
+            <div>
+                <label for="medical-discrepancies" class="block text-sm font-medium text-gray-700">How many
+                    discrepancies exist between medical records and claims?</label>
+                <input type="number" id="medical-discrepancies" name="medical-discrepancies"
+                    placeholder="Enter number of discrepancies"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Billing Codes Mismatch -->
+            <div>
+                <label for="billing-mismatch" class="block text-sm font-medium text-gray-700">How many billing codes
+                    mismatch the diagnosis?</label>
+                <input type="number" id="billing-mismatch" name="billing-mismatch"
+                    placeholder="Enter number of mismatches"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- ID Verification Mismatches -->
+            <div>
+                <label for="id-mismatches" class="block text-sm font-medium text-gray-700">Are there ID verification
+                    mismatches across documents?</label>
+                <input type="number" id="id-mismatches" name="id-mismatches" placeholder="Enter number of mismatches"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Pre-existing Condition Disclosure -->
+            <div>
+                <label for="pre-existing-condition" class="block text-sm font-medium text-gray-700">Was there a
+                    pre-existing condition not disclosed when purchasing or renewing Insurance?</label>
+                <select id="pre-existing-condition" name="pre-existing-condition"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Claims Beyond Submission Deadline -->
+            <div>
+                <label for="claims-beyond-deadline" class="block text-sm font-medium text-gray-700">What is the number
+                    of claims received beyond the policy's submission deadline?</label>
+                <input type="number" id="claims-beyond-deadline" name="claims-beyond-deadline"
+                    placeholder="Enter number of claims"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Duplicate Claims -->
+            <div>
+                <label for="duplicate-claims" class="block text-sm font-medium text-gray-700">How many duplicate claims
+                    exist across policies?</label>
+                <input type="number" id="duplicate-claims" name="duplicate-claims"
+                    placeholder="Enter number of duplicate claims"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Agent ID -->
+            <div>
+                <label for="agent-id" class="block text-sm font-medium text-gray-700">What is the ID number of the
+                    agent?</label>
+                <select id="agent-id" name="agent-id"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select an agent</option>
+                    <option value="ABC12345678">Agent 1 - ABC12345678</option>
+                    <option value="DEF12349659">Agent 2 - DEF12349659</option>
+                    <option value="XYZ12349546">Agent 3 - XYZ12349546</option>
+                </select>
+            </div>
+
+            <!-- Proceed Button -->
+            <button type="button" id="proceed-button"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Proceed
+            </button>
+        </form>
+    </main>
+    <script>
+
+        // Register the service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Handle Proceed Button Click
+        document.getElementById('proceed-button').addEventListener('click', () => {
+            const activePolicies = parseInt(document.getElementById('active-policies').value) || 0;
+            const medicalDiscrepancies = parseInt(document.getElementById('medical-discrepancies').value) || 0;
+            const billingMismatch = parseInt(document.getElementById('billing-mismatch').value) || 0;
+            const idMismatches = parseInt(document.getElementById('id-mismatches').value) || 0;
+            const preExistingCondition = document.getElementById('pre-existing-condition').value;
+            const claimsBeyondDeadline = parseInt(document.getElementById('claims-beyond-deadline').value) || 0;
+            const duplicateClaims = parseInt(document.getElementById('duplicate-claims').value) || 0;
+            const agentId = document.getElementById('agent-id').value;
+
+            // Validate inputs
+            const requiredFields = [
+                { value: activePolicies, name: 'Number of active health insurance policies' },
+                { value: medicalDiscrepancies, name: 'Number of discrepancies in medical records' },
+                { value: billingMismatch, name: 'Number of billing codes mismatched' },
+                { value: idMismatches, name: 'Number of ID verification mismatches' },
+                { value: preExistingCondition, name: 'Pre-existing condition disclosure' },
+                { value: claimsBeyondDeadline, name: 'Number of claims beyond submission deadline' },
+                { value: duplicateClaims, name: 'Number of duplicate claims' },
+                { value: agentId, name: 'Agent ID' },
+            ];
+
+            for (const field of requiredFields) {
+
+                // Ensure numeric fields are not negative
+                if (typeof field.value === 'number' && field.value < 0) {
+                    alert(`The value for ${field.name} cannot be negative.`);
+                    return;
+                }
+
+                // Check if the field is empty (null, undefined, or an empty string)
+                if (field.value === null || field.value === undefined || field.value === '') {
+                    alert(`Please fill out the field: ${field.name}`);
+                    return;
+                }
+            }
+
+            let totalMarks = 0;
+            const marks = {};
+
+            // Calculate Marks for Active Policies
+            if (activePolicies === 0) marks.activePolicies = 0;
+            else if (activePolicies === 1) marks.activePolicies = 1;
+            else if (activePolicies === 2) marks.activePolicies = 2;
+            else marks.activePolicies = 3;
+            totalMarks += marks.activePolicies;
+
+            // Calculate Marks for Medical Discrepancies
+            if (medicalDiscrepancies === 0) marks.medicalDiscrepancies = 0;
+            else if (medicalDiscrepancies <= 2) marks.medicalDiscrepancies = 2;
+            else marks.medicalDiscrepancies = 4;
+            totalMarks += marks.medicalDiscrepancies;
+
+            // Calculate Marks for Billing Mismatch
+            if (billingMismatch === 0) marks.billingMismatch = 0;
+            else if (billingMismatch <= 2) marks.billingMismatch = 2;
+            else marks.billingMismatch = 4;
+            totalMarks += marks.billingMismatch;
+
+            // Calculate Marks for ID Mismatches
+            if (idMismatches === 0) marks.idMismatches = 0;
+            else if (idMismatches <= 2) marks.idMismatches = 2;
+            else marks.idMismatches = 4;
+            totalMarks += marks.idMismatches;
+
+            // Calculate Marks for Pre-existing Condition
+            marks.preExistingCondition = preExistingCondition === 'Yes' ? 6 : 0;
+            totalMarks += marks.preExistingCondition;
+
+            // Calculate Marks for Claims Beyond Deadline
+            if (claimsBeyondDeadline === 0) marks.claimsBeyondDeadline = 0;
+            else if (claimsBeyondDeadline <= 2) marks.claimsBeyondDeadline = 2;
+            else marks.claimsBeyondDeadline = 4;
+            totalMarks += marks.claimsBeyondDeadline;
+
+            // Calculate Marks for Duplicate Claims
+            marks.duplicateClaims = duplicateClaims >= 1 ? 4 : 0;
+            totalMarks += marks.duplicateClaims;
+
+            // Calculate Marks for Agent ID
+            if (agentId === 'ABC12345678') marks.agentId = 0;
+            else if (agentId === 'DEF12349659') marks.agentId = 2;
+            else if (agentId === 'XYZ12349546') marks.agentId = 4;
+            totalMarks += marks.agentId;
+
+            // Store Results
+            const userResponses = {
+                activePolicies,
+                medicalDiscrepancies,
+                billingMismatch,
+                idMismatches,
+                preExistingCondition,
+                claimsBeyondDeadline,
+                duplicateClaims,
+                agentId,
+                marks,
+                totalMarks,
+            };
+
+            console.log(userResponses);
+            console.log('Marks:', marks);
+            console.log('Total Marks:', totalMarks);
+            localStorage.setItem('healthFraudResponses3', JSON.stringify(userResponses));
+
+            // Navigate to the next page (if applicable)
+            window.location.href = './health-fraud-4.html';
+        });
+    </script>
+</body>
+
+</html>

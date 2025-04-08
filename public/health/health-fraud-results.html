@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Your Health Fraud Risk Assessment Score">
+    <meta name="keywords" content="risk score, health fraud assessment">
+    <title>Health Fraud Risk Score</title>
+    <link rel="manifest" href="../manifest.json">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Risk Profile Text Styling */
+        .risk-profile-text {
+            margin-top: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .low-risk {
+            color: #16a34a;
+            /* Green */
+            background-color: #d1fae5;
+            /* Light Green */
+        }
+
+        .medium-risk {
+            color: #f59e0b;
+            /* Yellow */
+            background-color: #fef3c7;
+            /* Light Yellow */
+        }
+
+        .high-risk {
+            color: #dc2626;
+            /* Red */
+            background-color: #fee2e2;
+            /* Light Red */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4 text-center">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Your Health Fraud Risk Score</h1>
+            <p class="text-gray-600 mt-2">Based on your inputs, here is your risk score.</p>
+        </header>
+        <!-- Score Card -->
+        <div id="score-container" class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-4xl font-bold text-blue-500" id="risk-score">0</h2>
+            <p class="text-gray-700 mt-2">Out of 100</p>
+        </div>
+        <!-- Risk Profile Text -->
+        <p id="risk-profile-text" class="risk-profile-text"></p>
+        <!-- Back to Home Button -->
+        <button onclick="window.location.href='../landing.html'"
+            class="mt-6 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            Back to Home
+        </button>
+        <!-- Detailed Breakup Button -->
+        <button onclick="window.location.href='./health-fraud-breakup.html'"
+            class="mt-4 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+            Detailed Breakup
+        </button>
+    </main>
+    <script>
+        // Register the service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Retrieve risk scores from localStorage
+        const healthFraud1 = JSON.parse(localStorage.getItem('healthFraudResponsesInfo'))?.totalMarks || 0;
+        const healthFraud2 = JSON.parse(localStorage.getItem('healthFraudResponses2'))?.totalMarks || 0;
+        const healthFraud3 = JSON.parse(localStorage.getItem('healthFraudResponses3'))?.totalMarks || 0;
+        const healthFraud4 = JSON.parse(localStorage.getItem('healthFraudResponses4'))?.totalMarks || 0;
+
+        // Calculate total risk score
+        const totalRiskScore = Math.min(healthFraud1 + healthFraud2 + healthFraud3 + healthFraud4, 100);
+
+        // Update the risk score text
+        document.getElementById('risk-score').textContent = totalRiskScore.toFixed(2);
+
+        // Update the risk profile text with decoration
+        const riskProfileText = document.getElementById('risk-profile-text');
+        if (totalRiskScore <= 30) {
+            riskProfileText.textContent = "You have Low Risk Profile";
+            riskProfileText.classList.add('low-risk');
+        } else if (totalRiskScore <= 70) {
+            riskProfileText.textContent = "You have Medium Risk Profile";
+            riskProfileText.classList.add('medium-risk');
+        } else {
+            riskProfileText.textContent = "You have High Risk Profile";
+            riskProfileText.classList.add('high-risk');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Assess your health fraud risk">
+    <meta name="keywords" content="health fraud, risk assessment">
+    <title>Health Fraud Assessment - Step 2</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" sizes="192x192" href="../icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="../icons/icon-512x512.png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Health Fraud Assessment - Step 2</h1>
+            <p class="text-gray-600 mt-2">Provide additional details to assess your health fraud risk.</p>
+        </header>
+        <form id="health-fraud-step2-form" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            <!-- Claims Filed -->
+            <div>
+                <label for="claims-filed" class="block text-sm font-medium text-gray-700">How many claims have been
+                    filed by the applicant?</label>
+                <input type="number" id="claims-filed" name="claims-filed" placeholder="Enter number of claims filed"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Claims Rejected -->
+            <div>
+                <label for="claims-rejected" class="block text-sm font-medium text-gray-700">How many claims have been
+                    rejected of the applicant?</label>
+                <input type="number" id="claims-rejected" name="claims-rejected"
+                    placeholder="Enter number of claims rejected"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Claims Filed Against Non-Covered Services -->
+            <div>
+                <label for="non-covered-claims" class="block text-sm font-medium text-gray-700">How many instances where
+                    claim was filed against the service not covered in policy?</label>
+                <input type="number" id="non-covered-claims" name="non-covered-claims"
+                    placeholder="Enter number of such claims"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Claim Amount -->
+            <div>
+                <label for="claim-amount" class="block text-sm font-medium text-gray-700">What is the Claim amount filed
+                    by the applicant?</label>
+                <input type="number" id="claim-amount" name="claim-amount" placeholder="Enter claim amount"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Policy Coverage Amount -->
+            <div>
+                <label for="coverage-amount" class="block text-sm font-medium text-gray-700">What is the policy coverage
+                    amount of the applicant?</label>
+                <input type="number" id="coverage-amount" name="coverage-amount" placeholder="Enter coverage amount"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Policy Inception Date -->
+            <div>
+                <label for="inception-date" class="block text-sm font-medium text-gray-700">What is the inception date
+                    of the policy?</label>
+                <input type="date" id="inception-date" name="inception-date"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Claim Date -->
+            <div>
+                <label for="claim-date" class="block text-sm font-medium text-gray-700">What is the claim date of the
+                    policy?</label>
+                <input type="date" id="claim-date" name="claim-date"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Policy Modifications -->
+            <div>
+                <label for="policy-modifications" class="block text-sm font-medium text-gray-700">How frequently has the
+                    applicant modified their policy in the past year?</label>
+                <input type="number" id="policy-modifications" name="policy-modifications"
+                    placeholder="Enter number of modifications"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Beneficiary Updates -->
+            <div>
+                <label for="beneficiary-updates" class="block text-sm font-medium text-gray-700">How often has the
+                    beneficiary information been updated in the past year?</label>
+                <input type="number" id="beneficiary-updates" name="beneficiary-updates"
+                    placeholder="Enter number of updates"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Claim Filed Before Policy End -->
+            <div>
+                <label for="claim-before-end" class="block text-sm font-medium text-gray-700">Has the applicant filed
+                    for the claim just before the end of the policy period?</label>
+                <select id="claim-before-end" name="claim-before-end"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Proceed Button -->
+            <button type="button" id="proceed-button"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Proceed
+            </button>
+        </form>
+    </main>
+    <script>
+        // Register the service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Handle Proceed Button Click
+        document.getElementById('proceed-button').addEventListener('click', () => {
+            // Retrieve input values
+            const claimsFiled = parseInt(document.getElementById('claims-filed').value) || 0;
+            const claimsRejected = parseInt(document.getElementById('claims-rejected').value) || 0;
+            const nonCoveredClaims = parseInt(document.getElementById('non-covered-claims').value) || 0;
+            const claimAmount = parseFloat(document.getElementById('claim-amount').value) || 0;
+            const coverageAmount = parseFloat(document.getElementById('coverage-amount').value) || 0;
+            const inceptionDate = document.getElementById('inception-date').value;
+            const claimDate = document.getElementById('claim-date').value;
+            const policyModifications = parseInt(document.getElementById('policy-modifications').value) || 0;
+            const beneficiaryUpdates = parseInt(document.getElementById('beneficiary-updates').value) || 0;
+            const claimBeforeEnd = document.getElementById('claim-before-end').value;
+
+            // Validate inputs
+            const requiredFields = [
+                { value: claimsFiled, name: 'Number of claims filed' },
+                { value: claimsRejected, name: 'Number of claims rejected' },
+                { value: nonCoveredClaims, name: 'Number of non-covered claims' },
+                { value: claimAmount, name: 'Claim amount' },
+                { value: coverageAmount, name: 'Coverage amount' },
+                { value: inceptionDate, name: 'Inception date' },
+                { value: claimDate, name: 'Claim date' },
+                { value: policyModifications, name: 'Policy modifications' },
+                { value: beneficiaryUpdates, name: 'Beneficiary updates' },
+                { value: claimBeforeEnd, name: 'Claim before policy end' },
+            ];
+
+            for (const field of requiredFields) {
+                // Ensure numeric fields are not negative
+                if (typeof field.value === 'number' && field.value < 0) {
+                    alert(`The value for ${field.name} cannot be negative.`);
+                    return;
+                }
+
+                // Check if the field is empty (null, undefined, or an empty string)
+                if (field.value === null || field.value === undefined || field.value === '') {
+                    alert(`Please fill out the field: ${field.name}`);
+                    return;
+                }
+            }
+
+            let totalMarks = 0;
+            const marks = {};
+
+            // Calculate Rejection Ratio
+            const rejectionRatio = claimsRejected / claimsFiled * 100 || 0;
+            if (rejectionRatio < 10) marks.rejectionRatio = 1;
+            else if (rejectionRatio <= 30) marks.rejectionRatio = 4;
+            else if (rejectionRatio <= 50) marks.rejectionRatio = 6;
+            else marks.rejectionRatio = 8;
+            totalMarks += marks.rejectionRatio;
+
+            // Calculate Non-Covered Claims Marks
+            if (nonCoveredClaims === 0) marks.nonCoveredClaims = 0;
+            else if (nonCoveredClaims <= 2) marks.nonCoveredClaims = 2;
+            else if (nonCoveredClaims <= 5) marks.nonCoveredClaims = 4;
+            else marks.nonCoveredClaims = 6;
+            totalMarks += marks.nonCoveredClaims;
+
+            // Calculate Claim Amount to Coverage Ratio
+            const claimCoverageRatio = claimAmount / coverageAmount * 100 || 0;
+            if (claimCoverageRatio <= 50) marks.claimCoverageRatio = 0;
+            else if (claimCoverageRatio <= 90) marks.claimCoverageRatio = 2;
+            else marks.claimCoverageRatio = 4;
+            totalMarks += marks.claimCoverageRatio;
+
+            // Calculate Days Between Inception and Claim
+            const daysBetween = Math.ceil((new Date(claimDate) - new Date(inceptionDate)) / (1000 * 60 * 60 * 24)) || 0;
+            if (daysBetween <= 30) marks.daysBetween = 0;
+            else if (daysBetween <= 90) marks.daysBetween = 1;
+            else if (daysBetween <= 180) marks.daysBetween = 3;
+            else marks.daysBetween = 4;
+            totalMarks += marks.daysBetween;
+
+            // Calculate Policy Modifications Marks
+            if (policyModifications === 0) marks.policyModifications = 0;
+            else if (policyModifications === 1) marks.policyModifications = 1;
+            else if (policyModifications <= 3) marks.policyModifications = 3;
+            else marks.policyModifications = 4;
+            totalMarks += marks.policyModifications;
+
+            // Calculate Beneficiary Updates Marks
+            if (beneficiaryUpdates === 0) marks.beneficiaryUpdates = 0;
+            else if (beneficiaryUpdates === 1) marks.beneficiaryUpdates = 1;
+            else if (beneficiaryUpdates === 2) marks.beneficiaryUpdates = 2;
+            else marks.beneficiaryUpdates = 3;
+            totalMarks += marks.beneficiaryUpdates;
+
+            // Calculate Claim Before End Marks
+            marks.claimBeforeEnd = claimBeforeEnd === 'Yes' ? 4 : 0;
+            totalMarks += marks.claimBeforeEnd;
+
+            // Store Results
+            const userResponses = {
+                claimsFiled,
+                claimsRejected,
+                rejectionRatio,
+                nonCoveredClaims,
+                claimAmount,
+                coverageAmount,
+                claimCoverageRatio,
+                inceptionDate,
+                claimDate,
+                daysBetween,
+                policyModifications,
+                beneficiaryUpdates,
+                claimBeforeEnd,
+                marks,
+                totalMarks,
+            };
+
+            console.log(userResponses);
+            console.log('Marks:', marks);
+            console.log('Total Marks:', totalMarks);
+            localStorage.setItem('healthFraudResponses2', JSON.stringify(userResponses));
+
+            // Navigate to the next page
+            window.location.href = './health-fraud-3.html';
+        });
+    </script>
+</body>
+
+</html>

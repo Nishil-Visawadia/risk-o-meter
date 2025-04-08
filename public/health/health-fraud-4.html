@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Assess your health fraud risk">
+    <meta name="keywords" content="health fraud, risk assessment">
+    <title>Health Fraud Assessment - Step 4</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" sizes="192x192" href="../icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="../icons/icon-512x512.png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Health Fraud Assessment - Step 4</h1>
+            <p class="text-gray-600 mt-2">Provide additional details to assess your health fraud risk.</p>
+        </header>
+        <form id="health-fraud-step4-form" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            <!-- Hospital -->
+            <div>
+                <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital from which the treatment was received:</label>
+                <select id="hospital" name="hospital"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select a hospital</option>
+                    <option value="ABC Hospital">ABC Hospital</option>
+                    <option value="XYZ Government Hospital">XYZ Government Hospital</option>
+                </select>
+            </div>
+
+            <!-- Previous Surgeries Disclosure -->
+            <div>
+                <label for="previous-surgeries" class="block text-sm font-medium text-gray-700">Has the applicant disclosed previous surgeries when applying for insurance or filing claims?</label>
+                <select id="previous-surgeries" name="previous-surgeries"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Health Checkup Approved Center -->
+            <div>
+                <label for="approved-center" class="block text-sm font-medium text-gray-700">Was the health checkup conducted at an approved center?</label>
+                <select id="approved-center" name="approved-center"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Reluctance to Health Checkups -->
+            <div>
+                <label for="reluctance-checkups" class="block text-sm font-medium text-gray-700">Was the applicant reluctant to undergo health checkups as required?</label>
+                <select id="reluctance-checkups" name="reluctance-checkups"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Consistency in Filing ITRs -->
+            <div>
+                <label for="itr-consistency" class="block text-sm font-medium text-gray-700">Is the applicant consistent in filing ITRs?</label>
+                <select id="itr-consistency" name="itr-consistency"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Declared Income Alignment -->
+            <div>
+                <label for="income-alignment" class="block text-sm font-medium text-gray-700">Does the applicant's declared income align with verified documents such as income tax returns or recent bank statements?</label>
+                <select id="income-alignment" name="income-alignment"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Employment History -->
+            <div>
+                <label for="employment-history" class="block text-sm font-medium text-gray-700">How many jobs has the applicant held in the last year (less than 6 months in each role)?</label>
+                <input type="number" id="employment-history" name="employment-history" placeholder="Enter number of jobs"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Habits -->
+            <fieldset class="space-y-4">
+                <legend class="block text-sm font-medium text-gray-700">Habits</legend>
+                <div>
+                    <label for="physical-activities" class="block text-sm font-medium text-gray-700">Physical Activities</label>
+                    <select id="physical-activities" name="physical-activities"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select your activity level</option>
+                        <option value="Never">Never</option>
+                        <option value="Occasionally">Occasionally</option>
+                        <option value="Regularly">Regularly</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="meditation" class="block text-sm font-medium text-gray-700">Meditation</label>
+                    <select id="meditation" name="meditation"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select your meditation frequency</option>
+                        <option value="Never">Never</option>
+                        <option value="Occasionally">Occasionally</option>
+                        <option value="Regularly">Regularly</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="smoking" class="block text-sm font-medium text-gray-700">Smoking</label>
+                    <select id="smoking" name="smoking"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select your smoking habit</option>
+                        <option value="Never">Never</option>
+                        <option value="Occasionally">Occasionally</option>
+                        <option value="Regularly">Regularly</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="alcohol" class="block text-sm font-medium text-gray-700">Alcohol Consumption</label>
+                    <select id="alcohol" name="alcohol"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select your alcohol consumption</option>
+                        <option value="Never">Never</option>
+                        <option value="Occasionally">Occasionally</option>
+                        <option value="Regularly">Regularly</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <!-- Location -->
+            <div>
+                <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                <select id="location" name="location"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Select your location</option>
+                    <option value="Prabhadevi">Prabhadevi</option>
+                    <option value="Dadar">Dadar</option>
+                    <option value="Matunga">Matunga</option>
+                </select>
+            </div>
+
+            <!-- Proceed Button -->
+            <button type="button" id="proceed-button"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Proceed
+            </button>
+        </form>
+    </main>
+    <script>
+        document.getElementById('proceed-button').addEventListener('click', () => {
+            // Retrieve input values
+            const hospital = document.getElementById('hospital').value;
+            const previousSurgeries = document.getElementById('previous-surgeries').value;
+            const approvedCenter = document.getElementById('approved-center').value;
+            const reluctanceCheckups = document.getElementById('reluctance-checkups').value;
+            const itrConsistency = document.getElementById('itr-consistency').value;
+            const incomeAlignment = document.getElementById('income-alignment').value;
+            const employmentHistory = parseInt(document.getElementById('employment-history').value) || 0;
+            const physicalActivities = document.getElementById('physical-activities').value;
+            const meditation = document.getElementById('meditation').value;
+            const smoking = document.getElementById('smoking').value;
+            const alcohol = document.getElementById('alcohol').value;
+            const location = document.getElementById('location').value;
+
+            // Validate inputs
+            const requiredFields = [
+                { value: hospital, name: 'Hospital' },
+                { value: previousSurgeries, name: 'Previous Surgeries Disclosure' },
+                { value: approvedCenter, name: 'Approved Center' },
+                { value: reluctanceCheckups, name: 'Reluctance to Health Checkups' },
+                { value: itrConsistency, name: 'ITR Consistency' },
+                { value: incomeAlignment, name: 'Income Alignment' },
+                { value: employmentHistory, name: 'Employment History' },
+                { value: physicalActivities, name: 'Physical Activities' },
+                { value: meditation, name: 'Meditation' },
+                { value: smoking, name: 'Smoking' },
+                { value: alcohol, name: 'Alcohol Consumption' },
+                { value: location, name: 'Location' },
+            ];
+
+            for (const field of requiredFields) {
+                if (field.value === null || field.value === undefined || field.value === '') {
+                    alert(`Please fill out the field: ${field.name}`);
+                    return;
+                }
+            }
+
+            let totalMarks = 0;
+            const marks = {};
+
+            // Calculate Marks
+            marks.hospital = hospital === 'ABC Hospital' ? 0 : 4;
+            totalMarks += marks.hospital;
+
+            marks.previousSurgeries = previousSurgeries === 'Yes' ? 0 : 4;
+            totalMarks += marks.previousSurgeries;
+
+            marks.approvedCenter = approvedCenter === 'Yes' ? 0 : 3;
+            totalMarks += marks.approvedCenter;
+
+            marks.reluctanceCheckups = reluctanceCheckups === 'Yes' ? 3 : 0;
+            totalMarks += marks.reluctanceCheckups;
+
+            marks.itrConsistency = itrConsistency === 'Yes' ? 0 : 4;
+            totalMarks += marks.itrConsistency;
+
+            marks.incomeAlignment = incomeAlignment === 'Yes' ? 0 : 4;
+            totalMarks += marks.incomeAlignment;
+
+            marks.employmentHistory = employmentHistory === 0 ? 0 : employmentHistory === 1 ? 1 : 2;
+            totalMarks += marks.employmentHistory;
+
+            marks.physicalActivities = physicalActivities === 'Never' ? 5 : physicalActivities === 'Occasionally' ? 3 : 2;
+            totalMarks += marks.physicalActivities;
+
+            marks.meditation = meditation === 'Never' ? 5 : meditation === 'Occasionally' ? 3 : 1;
+            totalMarks += marks.meditation;
+
+            marks.smoking = smoking === 'Never' ? 0 : smoking === 'Occasionally' ? 4 : 5;
+            totalMarks += marks.smoking;
+
+            marks.alcohol = alcohol === 'Never' ? 0 : alcohol === 'Occasionally' ? 3 : 5;
+            totalMarks += marks.alcohol;
+
+            marks.location = location === 'Prabhadevi' ? 1 : location === 'Dadar' ? 3 : 5;
+            totalMarks += marks.location;
+
+            // Store Results
+            const userResponses = {
+                hospital,
+                previousSurgeries,
+                approvedCenter,
+                reluctanceCheckups,
+                itrConsistency,
+                incomeAlignment,
+                employmentHistory,
+                physicalActivities,
+                meditation,
+                smoking,
+                alcohol,
+                location,
+                marks,
+                totalMarks,
+            };
+
+            console.log(userResponses);
+            console.log('Marks:', marks);
+            console.log('Total Marks:', totalMarks);
+            localStorage.setItem('healthFraudResponses4', JSON.stringify(userResponses));
+
+            // Navigate to the next page (if applicable)
+            window.location.href = './health-fraud-results.html';
+        });
+    </script>
+</body>
+
+</html>

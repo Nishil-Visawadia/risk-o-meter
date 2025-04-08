@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png">
+    <meta name="description" content="Detailed Breakup of Your Health Fraud Risk Assessment">
+    <meta name="keywords" content="risk score, health fraud assessment, detailed breakup">
+    <title>Health Fraud Risk Breakup</title>
+    <link rel="manifest" href="../manifest.json">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen">
+    <main class="w-full max-w-md p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Detailed Risk Breakup</h1>
+            <p class="text-gray-600 mt-2">Here is the detailed breakup of your health fraud risk assessment.</p>
+        </header>
+        <div id="breakup-container" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+            <!-- Breakup Details Will Be Injected Here -->
+        </div>
+        <!-- Back to Results Button -->
+        <button onclick="window.location.href='./health-fraud-results.html'"
+            class="mt-6 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            Back to Results
+        </button>
+    </main>
+    <script>
+        // Retrieve marks from localStorage
+        const healthFraud2Marks = JSON.parse(localStorage.getItem('healthFraudResponses2'))?.marks || {};
+        const healthFraud3Marks = JSON.parse(localStorage.getItem('healthFraudResponses3'))?.marks || {};
+        const healthFraud4Marks = JSON.parse(localStorage.getItem('healthFraudResponses4'))?.marks || {};
+
+        // Combine all marks into a single object
+        const allMarks = {
+            ...healthFraud2Marks,
+            ...healthFraud3Marks,
+            ...healthFraud4Marks,
+        };
+
+        // Inject the detailed breakup into the page
+        const breakupContainer = document.getElementById('breakup-container');
+        for (const [key, value] of Object.entries(allMarks)) {
+            const item = document.createElement('p');
+            item.textContent = `${key}: ${value} marks`;
+            item.className = "text-gray-700";
+            breakupContainer.appendChild(item);
+        }
+    </script>
+</body>
+
+</html>
