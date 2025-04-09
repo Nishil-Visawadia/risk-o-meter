@@ -1,8 +1,8 @@
-# Risk-o-Meter
+# Fraud-o-Meter
 
 ## Overview
 
-Risk-o-Meter is a Progressive Web App (PWA) designed to assess insurance and mortgage risks based on user demographics. The app provides a user-friendly interface with a minimalist design and a pastel color palette, ensuring a pleasant user experience.
+Fraud-o-Meter is a Progressive Web App (PWA) designed to assess insurance and mortgage risks based on user demographics. The app provides a user-friendly interface with a minimalist design and a pastel color palette, ensuring a pleasant user experience.
 
 ## Features
 
@@ -21,7 +21,7 @@ Risk-o-Meter is a Progressive Web App (PWA) designed to assess insurance and mor
 ## Project Structure (PWA) standards
 
 ```readme
-risk-o-meter
+Fraud-o-Meter
 ├── public
 │   ├── index.html                  # Main HTML file
 │   ├── manifest.json               # PWA metadata
@@ -58,7 +58,7 @@ risk-o-meter
 2. Navigate to the project directory:endencies:
 
     ```cmd
-   cd risk-o-meter
+   cd Fraud-o-Meter
    ```
 
 3. Install dependencies:ject (if necessary):

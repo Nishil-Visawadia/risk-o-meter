@@ -1,6 +1,6 @@
 {
-  "name": "Risk-o-Meter",
-  "short_name": "Risk-o-Meter",
+  "name": "Fraud-o-Meter",
+  "short_name": "Fraud-o-Meter",
   "description": "A progressive web app for assessing insurance and mortgage risks.",
   "start_url": "/",
   "display": "standalone",

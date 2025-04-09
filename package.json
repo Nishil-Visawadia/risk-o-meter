@@ -1,5 +1,5 @@
 {
-  "name": "risk-o-meter",
+  "name": "Fraud-o-Meter",
   "version": "1.0.0",
   "description": "A Progressive Web App for assessing insurance and mortgage risks.",
   "main": "src/js/app.js",

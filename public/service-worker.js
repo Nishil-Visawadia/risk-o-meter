@@ -1,6 +1,6 @@
 // This service worker script enables caching for offline functionality and asset management.
 
-const CACHE_NAME = 'risk-o-meter-cache-v1';
+const CACHE_NAME = 'Fraud-o-Meter-cache-v1';
 const urlsToCache = [
     // '/',
     // './index.html',
