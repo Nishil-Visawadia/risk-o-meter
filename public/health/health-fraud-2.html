@@ -199,10 +199,10 @@
 
             // Calculate Days Between Inception and Claim
             const daysBetween = Math.ceil((new Date(claimDate) - new Date(inceptionDate)) / (1000 * 60 * 60 * 24)) || 0;
-            if (daysBetween <= 30) marks.daysBetween = 0;
-            else if (daysBetween <= 90) marks.daysBetween = 1;
-            else if (daysBetween <= 180) marks.daysBetween = 3;
-            else marks.daysBetween = 4;
+            if (daysBetween <= 30) marks.daysBetween = 4;
+            else if (daysBetween <= 90) marks.daysBetween = 3;
+            else if (daysBetween <= 180) marks.daysBetween = 1;
+            else marks.daysBetween = 0;
             totalMarks += marks.daysBetween;
 
             // Calculate Policy Modifications Marks

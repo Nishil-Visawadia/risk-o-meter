@@ -28,7 +28,7 @@
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="" disabled selected>Select a hospital</option>
                     <option value="ABC Hospital">ABC Hospital</option>
-                    <option value="XYZ Government Hospital">XYZ Government Hospital</option>
+                    <option value="XYZ Hospital">XYZ Hospital</option>
                 </select>
             </div>
 
@@ -201,7 +201,7 @@
             const marks = {};
 
             // Calculate Marks
-            marks.hospital = hospital === 'ABC Hospital' ? 0 : 4;
+            marks.hospital = hospital === 'XYZ Hospital' ? 0 : 4;
             totalMarks += marks.hospital;
 
             marks.previousSurgeries = previousSurgeries === 'Yes' ? 0 : 4;
